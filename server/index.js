@@ -28,6 +28,18 @@ app.post("/todo", async(req, res) => {
     return res.status(201).json(insertedTodo);
 });
 
+app.put("/todo/:id", async(req, res) => {
+    const { id } = req.params;
+    await Todo.updateOne({_id: id}, req.body);
+    const updatedTodo = await Todo.findById(id);
+    return res.status(200).json(updatedTodo);
+});
+
+app.delete("/todo/:id", async(req, res) => {
+    const { id } = req.params;
+    const deletedTodo = await Todo.findByIdAndDelete(id);
+    return res.status(200).json(deletedTodo)
+})
 
 
 app.listen(port, () => {
